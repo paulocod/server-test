@@ -1,0 +1,29 @@
+config:
+  target: "http://localhost:8000"
+  phases:
+    - name: "Warm up"
+      duration: 30
+      arrivalRate: 2
+    - name: "Ramp up load"
+      duration: 60
+      arrivalRate: 5
+      rampTo: 10
+    - name: "Sustained load"
+      duration: 120
+      arrivalRate: 10
+  plugins:
+    metrics-by-ednpoint: {}
+
+scenarios:
+  - name: "API flow"
+    flow:
+      - get:
+          url: "/api/products"
+          expect:
+            - statusCode: 200
+            - hasProperty: "length"
+      - think: 2
+      - get:
+          url: "/api/products/1"
+          expect:
+            - statusCode: 200

@@ -1,0 +1,26 @@
+# Node.js
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema de IDEs (como VSCode)
+.vscode/
+.idea/
+
+# Arquivos do ambiente local
+.env
+.env.local
+.env.*.local
+
+# Diretórios de build ou dist
+dist/
+build/
+
+# Arquivos de cache do npm
+npm-cache/
+
+# Teste de coverage (se usar Jest ou outro framework)
+coverage/
+
