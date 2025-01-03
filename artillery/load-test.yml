@@ -1,29 +1,32 @@
 config:
-  target: "http://localhost:8000"
+  target: "http://localhost:3000" # URL do servidor que será testado
   phases:
-    - name: "Warm up"
-      duration: 30
-      arrivalRate: 2
-    - name: "Ramp up load"
-      duration: 60
-      arrivalRate: 5
-      rampTo: 10
-    - name: "Sustained load"
-      duration: 120
-      arrivalRate: 10
-  plugins:
-    metrics-by-ednpoint: {}
+    - duration: 60 # Duração do teste em segundos
+      arrivalRate: 20 # Número de requisições por segundo
+  payload:
+    # Arquivo opcional para variáveis de teste (opcional para endpoints dinâmicos)
+    # file: "data.csv"
+    # fields: ["name"]
 
 scenarios:
-  - name: "API flow"
-    flow:
+  - flow:
       - get:
-          url: "/api/products"
-          expect:
-            - statusCode: 200
-            - hasProperty: "length"
-      - think: 2
+          url: "/"
       - get:
-          url: "/api/products/1"
-          expect:
-            - statusCode: 200
+          url: "/hello/JohnDoe"
+      - get:
+          url: "/greet?name=Jane"
+      - get:
+          url: "/sum"
+      - get:
+          url: "/duplicate-sum"
+      - get:
+          url: "/xss"
+      - get:
+          url: "/admin?admin=true"
+      - get:
+          url: "/exec"
+          qs:
+            code: "1+1" # Simula um código seguro para execução
+      - get:
+          url: "/memory-issue"
